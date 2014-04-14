@@ -10,6 +10,20 @@ function empty (obj) {
 //on each write - get the value first,
 
 /*
+
+//here is an FSM that describes part of this thing.
+//schema is {STATE: {event: NEW_STATE, event2: NEW_STATE2}
+//every FSM must contain START.
+
+{
+  START: {
+    need_read: 'READY',
+    end: 'END'
+  },
+  READY: { need_read: 'READY', reading: 'START' },
+  END: {}
+}
+
                 @ need_read
          .--- 2
          |    ^
