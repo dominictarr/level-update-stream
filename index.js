@@ -63,10 +63,14 @@ module.exports = function (db, cb) {
   // This part is a state machine which reads
   // and then writes if there are any thing to write.
 
+  function busy () {
+    return getting + toRead + writing.length
+  }
+
   function run () {
     if(!idle) return
 
-    if(wake) {
+    if(wake && !busy()) {
       var _wake = wake
       wake = null
       return _wake()
@@ -128,22 +132,23 @@ module.exports = function (db, cb) {
     read(null, function next (end, data) {
       if(end) {
         var err = end === true ? null : end
-        if(idle) cb(err, count)
+        if(!busy()) cb(err, count)
         else wake = function () { cb(err, count) }
         return
       }
       //EVENT: need read.
       if(!reading[data.key]) toRead ++
       reading[data.key] = data.value
-      run()
       //if there are lots of things moving already, wait until they have saved.
 
       function more () {
         read(null, next)
       }
 
-      if(getting + toRead + writing.length > 100) wake = more
-      else                        more()
+      if(busy() > 100) wake = more
+      else             more()
+
+      run()
     })
   }
 }
