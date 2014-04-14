@@ -1,7 +1,7 @@
 {
   "name": "level-update-stream",
-  "description": "",
-  "version": "0.0.0",
+  "description": "writestream to level, but only actual updates",
+  "version": "1.0.0",
   "homepage": "https://github.com/dominictarr/level-update-stream",
   "repository": {
     "type": "git",
