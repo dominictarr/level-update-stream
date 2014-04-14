@@ -8,12 +8,17 @@
     "url": "git://github.com/dominictarr/level-update-stream.git"
   },
   "dependencies": {
+    "pull-stream": "~2.21.0",
+    "deep-equal": "~0.2.1"
   },
   "devDependencies": {
+    "pull-level": "~1.1.10",
+    "tape": "~2.12.3",
+    "level-test": "~1.6.2"
   },
   "scripts": {
     "test": "set -e; for t in test/*.js; do node $t; done"
   },
   "author": "'Dominic Tarr' <dominic.tarr@gmail.com> (http://dominictarr.com)",
-  "license": "MIT"  
+  "license": "MIT"
 }
